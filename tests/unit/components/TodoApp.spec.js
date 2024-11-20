@@ -1,5 +1,6 @@
 import { shallowMount, mount } from "@vue/test-utils";
 import TodoApp from "@/components/TodoApp";
+import App from "@/App.vue"
 
 describe("TodoApp.vue", () => {
   test("Se muestra la descripción de la tarea", () => {
@@ -34,17 +35,31 @@ describe("TodoApp.vue", () => {
     // También puedes verificar si el checkbox está marcado
     expect(wrapper.get('[data-test="checkbox"]').element.checked).toBe(true);
   });
+  // it('muestra el texto pasado por props', () => {
+  //   const wrapper = mount(App, {
+  //     props: {
+  //       h1Text: 'Texto enviado desde el padre'
+  //     }
+  //   })
+  //   // Verificamos si el texto dentro del h1 es el mismo que el valor de la prop
+  //   expect(wrapper.find('h1').text()).toBe('Texto enviado desde el padre')
+  // });
+});
+describe('App.vue', () => {
   it('muestra el texto pasado por props', () => {
-    const wrapper = mount(TodoApp, {
-      props: {
-        h1Text: 'Texto enviado desde el padre'
-      }
-    })
-    
-    // Verificamos si el texto dentro del h1 es el mismo que el valor de la prop
-    expect(wrapper.find('h1').text()).toBe('Texto enviado desde el padre')
+    // Montamos el componente App
+    const wrapper = mount(App);
+
+    // Buscamos el componente hijo
+    const child = wrapper.findComponent(TodoApp);
+
+    // Verificamos si el prop `h1Text` tiene el valor esperado
+    expect(child.props('h1Text')).toBe('Lista de tareas');
   });
 });
+
+
+
 /** Si prefieres una sintaxis más explícita y directa, usa test.
     Si prefieres una sintaxis más cercana al lenguaje natural para describir lo que hace tu código, 
     puedes usar it. */
